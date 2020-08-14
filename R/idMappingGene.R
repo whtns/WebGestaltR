@@ -7,7 +7,7 @@ idMappingGene <- function(organism="hsapiens", dataType="list", inputGeneFile=NU
 
 	##########ID Mapping Specify to gene level###############
 	if(dataType=="list"){
-		inputGeneL <- unique(inputGene)
+		inputGeneL <- inputGene
 	}
 
 	if(dataType=="rnk"){

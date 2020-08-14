@@ -85,7 +85,7 @@ loadReferenceGene <- function(organism="hsapiens", referenceGeneFile=NULL, refer
 	geneMapMappedList <- geneMap$mapped
 	standardId <- geneMap$standardId
 
-	geneList <- as.character(unique(geneMapMappedList[[standardId]]))
+	geneList <- as.character(geneMapMappedList[[standardId]])
 	ov <- intersect(geneList, geneSet$gene)
 
 	if (length(ov)==0) {

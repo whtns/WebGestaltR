@@ -16,8 +16,8 @@ oraEnrichment <- function(interestGene, referenceGene, geneSet, minNum=10, maxNu
 
 	geneSet <-filter(geneSet, .data$geneSet %in% names(geneSetNum))
 
-	interestGene <- intersect(interestGene, geneSet$gene)
-	interestGene <- intersect(interestGene, referenceGene)
+	interestGene <- interestGene[interestGene %in% geneSet$gene]
+	interestGene <- interestGene[interestGene %in% referenceGene]
 	if (length(interestGene) == 0) {
 		stop("ERROR: No genes in the interesting list can annotate to any functional category.")
 	}
@@ -26,7 +26,12 @@ oraEnrichment <- function(interestGene, referenceGene, geneSet, minNum=10, maxNu
 	ra <- length(interestGene) / length(referenceGene)
 	refG <- data.frame(geneSet=names(geneSetNum), size=unname(geneSetNum), stringsAsFactors=FALSE)
 
-	intG <- filter(geneSet, .data$gene %in% interestGene)
+	# intG <- filter(geneSet, .data$gene %in% interestGene)
+	myinterestGene <- tibble::enframe(interestGene, "geneid", "gene")
+	intG <- dplyr::left_join(geneSet, myinterestGene, by = "gene") %>%
+	    filter(!is.na(.data$geneid)) %>%
+	    dplyr::select(-geneid)
+
 	intGNum <- tapply(intG$gene, intG$geneSet, length)
 	intGNum <- data.frame(geneSet=names(intGNum), overlap=unname(intGNum), stringsAsFactors=FALSE)
 

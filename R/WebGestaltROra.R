@@ -43,7 +43,7 @@ WebGestaltROra <- function(organism="hsapiens", enrichDatabase=NULL, enrichDatab
 		interestGeneList <- unique(interestingGeneMap)
 	} else {
 		interestStandardId <- interestingGeneMap$standardId
-		interestGeneList <- unique(interestingGeneMap$mapped[[interestStandardId]])
+		interestGeneList <- interestingGeneMap$mapped[[interestStandardId]]
 	}
 
 	################### Load reference gene set ##############
